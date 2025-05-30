@@ -1,0 +1,159 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document Selection</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEJ7tJU+zC5fJgQqxPpg6w6FjpqsbIFeJZ+fXy1Bf5twfYjlS4pe1zK9zdx7D" crossorigin="anonymous">
+  
+    <!-- Custom Styles -->
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(to right, #ce8dfc, #e8c8ff);
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .navbar {
+            background-color: #6a3cbc;
+        }
+
+        .navbar-brand {
+            font-size: 1.5rem;
+            color: #fff;
+            font-weight: bold;
+        }
+
+        .navbar-brand:hover {
+            text-decoration: none;
+            color: #e8c8ff;
+        }
+
+        .card {
+            border: none;
+            border-radius: 15px;
+            box-shadow: 0px 6px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .form-control, .form-select {
+            padding: 15px;
+            font-size: 1rem;
+            border-radius: 8px;
+            box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-control:focus, .form-select:focus {
+            border-color: #6a3cbc;
+            box-shadow: 0px 0px 8px rgba(106, 60, 188, 0.5);
+        }
+
+        .btn-primary {
+            background-color: #6a3cbc;
+            border: none;
+            border-radius: 25px;
+            padding: 12px 30px;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary:hover {
+            background-color: #4e28a3;
+            color: #fff;
+            box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        .result-card {
+            margin-top: 20px;
+            border: 2px solid #6a3cbc;
+            border-radius: 15px;
+            padding: 15px;
+            background-color: #fff;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.2);
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg navbar-dark" style="background-color: #ce8dfc;">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="/">Certisure</a>
+          
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+      
+          <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ms-auto">
+              <li class="nav-item">
+                <a class="nav-link active" aria-current="page" href="/">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'verify:input_page' %}">Get Started</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+<!-- Main Content -->
+<div class="container d-flex align-items-center justify-content-center" style="flex: 1;">
+    <div class="card p-5" style="width: 100%; max-width: 600px; justify-content: center;">
+        <h3 class="text-center mb-4">Document Verification</h3>
+        <form method="POST" action="{% url 'verify:input_page' %}">
+            {% csrf_token %}
+        
+            <!-- Dropdown for Document Type -->
+            <div class="mb-4">
+                <label for="documentType" class="form-label">Select Document Type</label>
+                <select class="form-select" id="doc_type" name="doc_type" required>
+                    <option value="" selected disabled>Choose...</option>
+                    <option value="aadhaar">Aadhaar</option>
+                    <option value="pan">PAN</option>
+                </select>
+            </div>
+        
+            <!-- Number Field (from numberfield Form) -->
+            <div class="mb-4">
+                <label for="{{ form.number.id_for_label }}" class="form-label">{{ form.number.label }}</label>
+                {{ form.number }}
+            </div>
+        
+            <!-- Submit Button -->
+            <div class="text-center">
+                <button type="submit" class="btn btn-primary">Verify</button>
+            </div>
+        </form>
+        {% if result %}
+        <div class="result-card">
+            <h5>Verification Result</h5>
+            <p><strong>Document Type:</strong> Aadhaar</p>
+            <p><strong>Aadhaar Number:</strong> {{ result.aadharnumber }}</p>
+            <p><strong>Name:</strong> {{ result.username }}</p>
+            <p><strong>Date of Birth:</strong> {{ result.dob }}</p>
+            {% if result.verification %}
+                <p><strong>is active:</strong> {{ result.verification }}</p>
+            {% endif %}
+            <!-- Add more fields as needed -->
+        </div>
+    {% elif error %}
+        <div class="result-card text-danger">
+            <h5>Error</h5>
+            <p>{{ error }}</p>
+        </div>
+    {% endif %}
+    </div>
+</div>
+
+<!-- Bootstrap JS and Popper.js -->
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js" integrity="sha384-oBqDVmMz4fnFO9gybBps6a6L9V1p0M4EMNd6oB1vUlXhXQ2t6O/jc2OnF2FQ56j13" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.min.js" integrity="sha384-pzjw8f+ua7Kw1TIq0S4pD1Z7vkhM9A2X7qz2h4tB5frg5yfsN+G5lhPRjo6y3A8t" crossorigin="anonymous"></script>
+
+</body>
+</html>

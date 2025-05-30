@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+
+{% block title %}Sign Up{% endblock %}
+
+{% block content %}
+<section class="hero-section">
+    <div class="container text-center text-md-start">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <h1 class="hero-title">Create Your Certisure Account</h1>
+                <p class="hero-description">Join Certisure and verify certificates instantly.</p>
+                <form method="post" action="{% url 'verify:signin' %}" class="mt-4">
+                    {% csrf_token %}
+                    <div class="form-group mb-3">
+                        
+                        {{ form.username.label_tag }}
+                        {{ form.username }}
+                        {% if form.username.errors %}
+                            <div class="text-danger">
+                                {{ form.username.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="form-group mb-3">
+                        {{ form.email.label_tag }}
+                        {{ form.email }}
+                        {% if form.email.errors %}
+                            <div class="text-danger">
+                                {{ form.email.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="form-group mb-3">
+                        {{ form.password1.label_tag }}
+                        {{ form.password1 }}
+                        {% if form.password1.errors %}
+                            <div class="text-danger">
+                                {{ form.password1.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <div class="form-group mb-3">
+                        {{ form.password2.label_tag }}
+                        {{ form.password2 }}
+                        {% if form.password2.errors %}
+                            <div class="text-danger">
+                                {{ form.password2.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg mt-2">Sign Up</button>
+                </form>
+                <p class="hero-description mt-3">
+                    Already have an account? <a href="{% url 'verify:login' %}" class="text-danger">Login here</a>.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

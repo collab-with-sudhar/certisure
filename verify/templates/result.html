@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+
+{% block title %}Validation Result{% endblock %}
+
+{% block content %}
+    <!-- Validation Result Section -->
+    <section class="result-section py-5">
+        <div class="container text-center">
+            <h1 class="display-4 mb-4">Validation Result</h1>
+            <p class="lead mb-4">Here are the details of your Aadhaar card validation:</p>
+
+            <!-- Validation Message -->
+            <div class="alert alert-info mb-4">
+                <strong>Validation Message:</strong> {{ message }}
+            </div>
+
+            <!-- Extracted Details -->
+            <div class="card shadow-lg p-4 mb-5">
+                <h2 class="h4 mb-3">Extracted Details</h2>
+                <ul class="list-unstyled">
+                    <li><strong>Aadhaar Number:</strong> {{ details.aadhaar_number }}</li>
+                    <li><strong>Name:</strong> {{ details.name }}</li>
+                    <li><strong>Date of Birth:</strong> {{ details.dob }}</li>
+                    <li><strong>Gender:</strong> {{ details.gender }}</li>
+                </ul>
+            </div>
+
+            <!-- Extracted Text -->
+            <div class="card shadow-lg p-4 mb-5">
+                <h2 class="h4 mb-3">Extracted Text</h2>
+                <pre>{{ extracted_text }}</pre>
+            </div>
+
+            <!-- QR Code Data -->
+            <div class="card shadow-lg p-4 mb-5">
+                <h2 class="h4 mb-3">QR Code Data</h2>
+                <pre>{{ qr_data }}</pre>
+            </div>
+
+            <a href="/" class="btn btn-primary btn-lg">Upload Another</a>
+        </div>
+    </section>
+{% endblock %}

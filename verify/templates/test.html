@@ -1,0 +1,21 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>hello world</title>
+</head>
+<body>
+    {% if result %}
+
+        <h2>aadhar user exists</h2>
+        <h2>{{ result.username }}</h2>
+        <h2>{{ result.mobilenumber }}</h2>
+    {% elif error %}
+        <h2>{{ error }}</h2>
+    {% endif %}
+
+    
+</body>
+</html>

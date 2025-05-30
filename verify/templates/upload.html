@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+
+{% block title %}Upload Aadhaar{% endblock %}
+
+{% block content %}
+    <!-- Upload Aadhaar Section -->
+    <section class="upload-section py-5">
+        <div class="container text-center">
+            <h1 class="display-4 mb-4">Upload Aadhaar Card</h1>
+            <p class="lead mb-4">Please upload your Aadhaar card to proceed with the verification process.</p>
+            
+            <div class="card shadow-lg p-4">
+                <form method="post" enctype="multipart/form-data">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        {{ form.as_p }}
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-lg mt-3">Upload</button>
+                </form>
+            </div>
+        </div>
+    </section>
+{% endblock %}

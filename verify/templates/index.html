@@ -1,0 +1,104 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certisure - Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark">
+        <div class="container-fluid px-5">
+            <a class="navbar-brand fw-bold" href="/">Certisure</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="/">Home</a>
+                    </li>
+                  {% if user.is_authenticated %}
+                    <li class="nav-item">
+                      <a class="nav-link active" href="{% url 'verify:logout' %}">logout</a>
+                    </li>
+                  {% else %}
+                  <li class="nav-item">
+                      <a class="nav-link active" href="{% url 'verify:signin' %}">Register</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active" href="{% url 'verify:login' %}">Login</a>
+                  </li>
+                  {% endif %}
+                  {% if user.is_authenticated %}
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'verify:upload_certificate' %}">Verify</a>
+                    </li> 
+                    <li class="nav-item">
+                        <h4 class="nav-link">Welcome-{{ user.username }}</h4>
+                    </li>
+                  {% else %}
+                    <li class="nav-item">
+                      <a class="nav-link" href="{% url 'verify:login' %}">Get Started</a>
+                    </li>
+                  {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="container text-center text-md-start">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <h1 class="hero-title">Verify Your Certificates<br> Instantly & Securely</h1>
+                    <p class="hero-description">Certisure provides a seamless platform for verifying Aadhaar and PAN card authenticity in seconds.</p>
+                    <a href="{% url 'verify:input_page' %}" class="btn btn-primary btn-lg mt-3">Get Started</a>
+                </div>
+                <div class="col-md-6 text-center">
+                    <img src="{% static 'images/certisure.png' %}" alt="Hero Image" class="hero-image">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features-section py-5">
+        <div class="container">
+            <div class="row text-center">
+                <div class="col-md-4 feature-card">
+                    <i class="bi bi-shield-check feature-icon"></i>
+                    <h3 class="feature-title">Reliable</h3>
+                    <p class="feature-description">Certisure guarantees the authenticity of your certificates using cutting-edge technology.</p>
+                </div>
+                <div class="col-md-4 feature-card">
+                    <i class="bi bi-clock feature-icon"></i>
+                    <h3 class="feature-title">Fast</h3>
+                    <p class="feature-description">Our system ensures rapid results for a hassle-free experience.</p>
+                </div>
+                <div class="col-md-4 feature-card">
+                    <i class="bi bi-lock feature-icon"></i>
+                    <h3 class="feature-title">Secure</h3>
+                    <p class="feature-description">Your data is encrypted and protected at every step of the verification process.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer py-3">
+        <div class="container text-center">
+            <p class="mb-0 text-white">&copy; 2024 Certisure. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+</body>
+</html>
